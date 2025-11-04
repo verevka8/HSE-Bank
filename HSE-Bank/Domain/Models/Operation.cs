@@ -32,5 +32,12 @@
             Description = description;
             bankAccount.AcceptOperation(this);
         }
+
+        public override string ToString()
+        {
+            return
+                $"Имя счета: {BankAccount.Name}, сумма: {Amount},  дата: {Date},  тип: {(Type == TransferType.Expense ? "Трата" : "Поступление")}, категория: {OperationCategory.Name}"
+                + (Description == null ? "" : $", описание: {Description}");
+        }
     }
 }

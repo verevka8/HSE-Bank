@@ -6,7 +6,7 @@ namespace HSE_Bank.Service
 {
     public class BankService
     {
-        private readonly IBankRepository _repository; 
+        private readonly IBankRepository _repository;
         private readonly BankFactory _factory;
 
         public BankService(IBankRepository repository, BankFactory factory)
@@ -29,7 +29,12 @@ namespace HSE_Bank.Service
             return account;
         }
 
-        public BankAccount DeleteBankAccount(Guid id)
+        public void DeleteBankAccount(Guid id)
+        {
+            _repository.DeleteAccount(id);
+        }
+
+        public BankAccount GetBankAccount(Guid id)
         {
             return _repository.GetBankAccount(id);
         }

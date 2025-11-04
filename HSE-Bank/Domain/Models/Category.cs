@@ -3,9 +3,9 @@
     public class Category
     {
         public Guid Id { get; } = Guid.NewGuid();
-        
+
         public TransferType Type { get; }
-        
+
         public string Name { get; }
 
 
@@ -13,6 +13,11 @@
         {
             Name = name;
             Type = type;
+        }
+
+        public override string ToString()
+        {
+            return $"Название: {Name}, тип: {(Type == TransferType.Expense ? "Трата" : "Поступление")}";
         }
     }
 }

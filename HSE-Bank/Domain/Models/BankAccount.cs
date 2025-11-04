@@ -34,5 +34,10 @@ namespace HSE_Bank
 
             Balance += (operation.Type == TransferType.Income ? 1 : -1) * operation.Amount;
         }
+
+        public override string ToString()
+        {
+            return $"Имя счета: {Name}, баланс: {Balance}";
+        }
     }
 }

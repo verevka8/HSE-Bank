@@ -23,6 +23,11 @@ namespace HSE_Bank
             throw new KeyNotFoundException("Такой аккаунт не найден");
         }
 
+        public void DeleteAccount(Guid id)
+        {
+            _accounts.Remove(id);
+        }
+
         public void AddOperation(Operation operation)
         {
             _operations[operation.Id] = operation; //TODO: проверка на повторы?
