@@ -1,15 +1,19 @@
-﻿using HSE_Bank.Domain.Models;
+﻿using HSE_Bank.Domain.Export;
 
-namespace HSE_Bank
+namespace HSE_Bank.Domain.Models
 {
-    public class BankAccount
+    public class BankAccount : IPrototype<BankAccount>
     {
-        public Guid Id { get; } = Guid.NewGuid();
+        public Guid Id { get; private set; }
         public string Name { set; get; }
 
         public int Balance { get; private set; }
 
-        public BankAccount(string name, int balance)
+        public BankAccount(string name, int balance) : this(Guid.NewGuid(), name, balance)
+        {
+        }
+
+        public BankAccount(Guid id, string name, int balance) 
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -22,6 +26,7 @@ namespace HSE_Bank
                 throw new ArgumentException("Баланс не может быть отрицательным");
             }
 
+            Id = id;
             Balance = balance;
         }
 
@@ -35,9 +40,19 @@ namespace HSE_Bank
             Balance += (operation.Type == TransferType.Income ? 1 : -1) * operation.Amount;
         }
 
+        public BankAccount Clone()
+        {
+            return new BankAccount(Id, Name, Balance);
+        }
+
         public override string ToString()
         {
             return $"Имя счета: {Name}, баланс: {Balance}";
+        }
+        
+        public void Accept(IExportVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

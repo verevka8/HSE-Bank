@@ -1,8 +1,11 @@
-﻿namespace HSE_Bank.Domain.Models
+﻿using HSE_Bank.Domain.Export;
+using System.Runtime.InteropServices.JavaScript;
+
+namespace HSE_Bank.Domain.Models
 {
-    public class Operation
+    public class Operation : IPrototype<Operation>
     {
-        public Guid Id { get; } = Guid.NewGuid();
+        public Guid Id { get; private set; }
 
         public BankAccount BankAccount { get; }
 
@@ -17,6 +20,11 @@
         public Category OperationCategory { set; get; }
 
         public Operation(BankAccount bankAccount, TransferType type, int amount, Category category,
+            string? description = null) : this(Guid.NewGuid(), bankAccount, type, amount, category, DateTime.Now, description)
+        {
+        }
+
+        public Operation(Guid id, BankAccount bankAccount, TransferType type, int amount, Category category, DateTime date,
             string? description = null)
         {
             BankAccount = bankAccount;
@@ -28,9 +36,15 @@
 
             Amount = amount;
             OperationCategory = category;
-            Date = DateTime.Now;
+            Date = date;
             Description = description;
+            Id = id;
             bankAccount.AcceptOperation(this);
+        }
+
+        public Operation Clone()
+        {
+            return new Operation(Id, BankAccount, Type, Amount, OperationCategory, Date, Description);
         }
 
         public override string ToString()
@@ -38,6 +52,11 @@
             return
                 $"Имя счета: {BankAccount.Name}, сумма: {Amount},  дата: {Date},  тип: {(Type == TransferType.Expense ? "Трата" : "Поступление")}, категория: {OperationCategory.Name}"
                 + (Description == null ? "" : $", описание: {Description}");
+        }
+        
+        public void Accept(IExportVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

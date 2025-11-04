@@ -41,7 +41,5 @@ namespace HSE_Bank.Service
         {
             return GetTotalsByCategory(bankAccountId, TransferType.Income);
         }
-        
-        
     }
 }

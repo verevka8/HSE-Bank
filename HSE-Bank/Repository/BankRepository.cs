@@ -5,8 +5,8 @@ namespace HSE_Bank
 {
     public class BankRepository : IBankRepository
     {
-        private Dictionary<Guid, BankAccount> _accounts = new Dictionary<Guid, BankAccount>();
-        private Dictionary<Guid, Operation> _operations = new Dictionary<Guid, Operation>();
+        private readonly Dictionary<Guid, BankAccount> _accounts = new Dictionary<Guid, BankAccount>();
+        private readonly Dictionary<Guid, Operation> _operations = new Dictionary<Guid, Operation>();
 
         public void AddBankAccount(BankAccount account)
         {
@@ -27,6 +27,11 @@ namespace HSE_Bank
         {
             _accounts.Remove(id);
         }
+        
+        public List<BankAccount> GetAllBankAccounts()
+        {
+            return _accounts.Values.ToList();
+        }
 
         public void AddOperation(Operation operation)
         {
@@ -45,7 +50,18 @@ namespace HSE_Bank
 
         public List<Operation> GetAllUserOperations(Guid bankAccountId)
         {
-            return _operations.Where(pair => pair.Key == bankAccountId).Select(pair => pair.Value).ToList();
+            return _operations.Values.Where(operation => operation.BankAccount.Id == bankAccountId).ToList();
+        }
+        
+        public List<Operation> GetAllOperations()
+        {
+            return _operations.Values.ToList();
+        }
+        
+        public void Clear()
+        {
+            _accounts.Clear();
+            _operations.Clear();
         }
     }
 }

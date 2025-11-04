@@ -19,7 +19,7 @@ namespace HSE_Bank.Domain.Factory
 
         public Category GetCategory(int id)
         {
-            if (id / 10 != 2 || id / 10 != 1)
+            if (id / 10 != 2 && id / 10 != 1)
             {
                 throw new ArgumentException("Нет категории с таким id");
             }

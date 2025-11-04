@@ -19,14 +19,14 @@ namespace HSE_Bank.Service
         {
             BankAccount newAccount = _factory.CreateBankAccount(name, balance);
             _repository.AddBankAccount(newAccount);
-            return newAccount;
+            return newAccount.Clone();
         }
 
         public BankAccount EditBankAccount(Guid id, string name)
         {
             BankAccount account = _repository.GetBankAccount(id);
             account.Name = name;
-            return account;
+            return account.Clone();
         }
 
         public void DeleteBankAccount(Guid id)
@@ -36,7 +36,7 @@ namespace HSE_Bank.Service
 
         public BankAccount GetBankAccount(Guid id)
         {
-            return _repository.GetBankAccount(id);
+            return _repository.GetBankAccount(id).Clone();
         }
 
         public Operation CreateOperation(Guid bankAccountId, TransferType type, int amount, int categoryId,
@@ -45,12 +45,12 @@ namespace HSE_Bank.Service
             Operation operation = new Operation(_repository.GetBankAccount(bankAccountId), type, amount,
                 _factory.GetCategory(categoryId), description);
             _repository.AddOperation(operation);
-            return operation;
+            return operation.Clone();
         }
 
         public Operation GetOperation(Guid id)
         {
-            return _repository.GetOperation(id);
+            return _repository.GetOperation(id).Clone();
         }
 
         public Operation EditOperation(Guid id, int newCategoryId, string? newDescription = null)
@@ -58,7 +58,7 @@ namespace HSE_Bank.Service
             Operation operation = _repository.GetOperation(id);
             operation.OperationCategory = _factory.GetCategory(newCategoryId);
             operation.Description = newDescription;
-            return operation;
+            return operation.Clone();
         }
 
         public Category GetCategory(int id)
