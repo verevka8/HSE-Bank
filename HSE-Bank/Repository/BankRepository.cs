@@ -26,6 +26,20 @@ namespace HSE_Bank
         public void DeleteAccount(Guid id)
         {
             _accounts.Remove(id);
+            List<Guid> operationsToDelete = new List<Guid>();
+            foreach (Operation item in _operations.Values)
+            {
+                if (item.BankAccount.Id == id)
+                {
+                    operationsToDelete.Add(item.Id);
+                }
+                
+            }
+
+            foreach (Guid item in operationsToDelete)
+            {
+                _operations.Remove(item);
+            }
         }
         
         public List<BankAccount> GetAllBankAccounts()

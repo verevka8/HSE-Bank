@@ -4,21 +4,21 @@ namespace HSE_Bank.Domain
 {
     public interface IBankRepository
     {
-        public void AddBankAccount(BankAccount account);
+        void AddBankAccount(BankAccount account);
 
-        public BankAccount GetBankAccount(Guid id);
+        BankAccount GetBankAccount(Guid id);
 
-        public void DeleteAccount(Guid id);
+        void DeleteAccount(Guid id);
         
-        public List<BankAccount> GetAllBankAccounts();
+        List<BankAccount> GetAllBankAccounts();
 
-        public void AddOperation(Operation operation);
+        void AddOperation(Operation operation);
 
-        public Operation GetOperation(Guid id);
+        Operation GetOperation(Guid id);
 
-        public List<Operation> GetAllUserOperations(Guid bankAccountId);
+        List<Operation> GetAllUserOperations(Guid bankAccountId);
         
-        public List<Operation> GetAllOperations();
-        public void Clear();
+        List<Operation> GetAllOperations();
+        void Clear();
     }
 }

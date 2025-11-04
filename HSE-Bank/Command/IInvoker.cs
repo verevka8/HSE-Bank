@@ -1,8 +1,8 @@
-﻿namespace HSE_Bank.Command.BankCommand
+﻿namespace HSE_Bank.Command
 {
     public interface IInvoker
     {
-        public void Run(ICommand cmd);
-        public void Undo();
+        void Run(ICommand cmd);
+        void Undo();
     }
 }

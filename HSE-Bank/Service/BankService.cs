@@ -61,6 +61,21 @@ namespace HSE_Bank.Service
             return operation.Clone();
         }
 
+        public List<Operation> GetAllOperations()
+        {
+            return _repository.GetAllOperations();
+        }
+        
+        public List<BankAccount> GetAllBankAccounts()
+        {
+            return _repository.GetAllBankAccounts();
+        }
+        
+        public List<Operation> GetAllUserOperations(Guid bankAccountId)
+        {
+            return _repository.GetAllUserOperations(bankAccountId);
+        }
+        
         public Category GetCategory(int id)
         {
             return _factory.GetCategory(id);

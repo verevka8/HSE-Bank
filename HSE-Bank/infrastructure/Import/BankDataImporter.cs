@@ -45,7 +45,7 @@ namespace HSE_Bank.Infrastructure.Import
                 if (!accounts.TryGetValue(operationDto.BankAccountId, out BankAccount? account))
                 {
                     throw new InvalidDataException(
-                        $"Не удалось найти счет {operationDto.BankAccountId} для {operationDto.Id}");
+                        $"Не удалось найти счет {operationDto.BankAccountId} для операции {operationDto.Id}");
                 }
 
                 Category category = new Category(operationDto.CategoryName, operationDto.CategoryType);
